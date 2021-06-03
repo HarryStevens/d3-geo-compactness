@@ -6732,8 +6732,6 @@
   var saturday = weekday(6);
 
   var sundays = sunday.range;
-  var mondays = monday.range;
-  var thursdays = thursday.range;
 
   var month = newInterval(function(date) {
     date.setDate(1);
@@ -6823,8 +6821,6 @@
   var utcSaturday = utcWeekday(6);
 
   var utcSundays = utcSunday.range;
-  var utcMondays = utcMonday.range;
-  var utcThursdays = utcThursday.range;
 
   var utcMonth = newInterval(function(date) {
     date.setUTCDate(1);
@@ -7647,7 +7643,14 @@
   }
 
   function geoHull(feature) {
-    return geoVoronoi(jiggle(flatten$2(feature))).hull();
+    var flattened = flatten$2(feature);
+    var hull = geoVoronoi(flattened).hull(); // Test if the jiggle is necessary
+
+    if (geoArea(hull) >= geoArea(feature)) {
+      return hull;
+    } else {
+      return geoVoronoi(jiggle(flattened)).hull();
+    }
   } // Flatten nested coordinates
 
 

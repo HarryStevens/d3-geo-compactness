@@ -10,7 +10,15 @@ export function geoHullRatio(feature) {
 }
 
 function geoHull(feature){
-  return geoVoronoi(jiggle(flatten(feature))).hull();
+  const flattened = flatten(feature);
+  const hull = geoVoronoi(flattened).hull();
+  // Test if the jiggle is necessary
+  if (geoArea(hull) >= geoArea(feature)){
+    return hull;
+  }
+  else {
+    return geoVoronoi(jiggle(flattened)).hull();
+  }
 }
 
 // Flatten nested coordinates
