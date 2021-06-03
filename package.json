@@ -1,0 +1,52 @@
+{
+  "name": "d3-geo-compactness",
+  "version": "0.0.1",
+  "description": "A JavaScript library for computing the compactness of GeoJSON features.",
+  "main": "dist/d3-geo-compactness.js",
+  "unpkg": "dist/d3-geo-compactness.min.js",
+  "module": "index.js",
+  "jsnext:main": "index.js",
+  "scripts": {
+    "pretest": "rm -rf dist && mkdir dist && rollup -c --banner \"$(preamble)\"",
+    "test": "tape 'test/**/*-test.js'",
+    "prepublish": "npm run test && uglifyjs dist/d3-geo-compactness.js -c -m -o dist/d3-geo-compactness.min.js",
+    "postpublish": "zip -j dist/d3-geo-compactness.zip -- LICENSE README.md dist/d3-geo-compactness.js dist/d3-geo-compactness.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HarryStevens/d3-geo-compactness"
+  },
+  "keywords": [
+    "compactness",
+    "gerrymandering",
+    "redistricting",
+    "d3",
+    "d3-module",
+    "d3-geo"
+  ],
+  "author": {
+    "name": "Harry Stevens",
+    "url": "http://harryjstevens.com/"
+  },
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/HarryStevens/d3-geo-compactness/issues"
+  },
+  "homepage": "https://github.com/HarryStevens/d3-geo-compactness#readme",
+  "dependencies": {
+    "d3-geo": "^2.0.1",
+    "d3-geo-voronoi": "^1.6.0",
+    "d3-hierarchy": "^2.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "babel": "^6.23.0",
+    "package-preamble": "0.1",
+    "rollup": "^0.62.0",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "tape": "4",
+    "uglify-js": "^2.8.11"
+  }
+}
