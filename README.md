@@ -19,7 +19,7 @@ compactness(GeoJSONObject);
 
 <a name="geoHullRatio" href="#geoHullRatio">#</a> d3.<b>geoHullRatio</b>(<i>object</i>) · [Source](https://github.com/harrystevens/d3-geo-compactness/blob/master/src/geoHullRatio.js "Source")
 
-Returns the ratio of the district’s area to its [convex hull](https://en.wikipedia.org/wiki/Convex_hull)’s area.
+Returns the ratio of the area of the specified GeoJSON <i>object</i> to the area of its [convex hull](https://en.wikipedia.org/wiki/Convex_hull).
 
 <a name="geoPolsbyPopper" href="#geoPolsbyPopper">#</a> d3.<b>geoPolsbyPopper</b>(<i>object</i>) · [Source](https://github.com/harrystevens/d3-geo-compactness/blob/master/src/geoPolsbyPopper.js "Source")
 
