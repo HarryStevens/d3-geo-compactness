@@ -5,7 +5,7 @@ A JavaScript library for computing the compactness of GeoJSON features. Measurin
 If you use NPM, `npm install d3-geo-compactness`. Otherwise, download the [latest release](https://github.com/HarryStevens/d3-geo-compactness/blob/main/dist/d3-geo-compactness.zip). AMD, CommonJS, and vanilla environments are supported. In vanilla, a d3 global is exported:
 
 ```html
-<script src="https://unpkg.com/d3-geo-compactness@0.0.2/dist/d3-geo-compactness.min.js"></script>
+<script src="https://unpkg.com/d3-geo-compactness@0.0.3/dist/d3-geo-compactness.min.js"></script>
 <script>
 
 const compactness = d3.geoPolsbyPopper();
@@ -16,6 +16,10 @@ compactness(GeoJSONObject);
 ```
 
 ## API Reference
+
+<a name="geoHullRatio" href="#geoHullRatio">#</a> d3.<b>geoHullRatio</b>(<i>object</i>) · [Source](https://github.com/harrystevens/d3-geo-compactness/blob/master/src/geoHullRatio.js "Source")
+
+Returns the ratio of the district’s area to its [convex hull](https://en.wikipedia.org/wiki/Convex_hull)’s area.
 
 <a name="geoPolsbyPopper" href="#geoPolsbyPopper">#</a> d3.<b>geoPolsbyPopper</b>(<i>object</i>) · [Source](https://github.com/harrystevens/d3-geo-compactness/blob/master/src/geoPolsbyPopper.js "Source")
 

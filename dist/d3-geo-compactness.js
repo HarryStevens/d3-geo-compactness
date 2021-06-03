@@ -5,6 +5,65 @@
   (factory((global.d3 = global.d3 || {})));
 }(this, (function (exports) { 'use strict';
 
+  function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+  }
+
+  function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+  }
+
+  function _iterableToArrayLimit(arr, i) {
+    var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]);
+
+    if (_i == null) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+
+    var _s, _e;
+
+    try {
+      for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"] != null) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+
+    return _arr;
+  }
+
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+
+  function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
   function ascending(a, b) {
     return a < b ? -1 : a > b ? 1 : a >= b ? 0 : NaN;
   }
@@ -120,6 +179,78 @@
       }
       return hi;
     }
+  }
+
+  class InternMap extends Map {
+    constructor(entries, key = keyof) {
+      super();
+      Object.defineProperties(this, {_intern: {value: new Map()}, _key: {value: key}});
+      if (entries != null) for (const [key, value] of entries) this.set(key, value);
+    }
+    get(key) {
+      return super.get(intern_get(this, key));
+    }
+    has(key) {
+      return super.has(intern_get(this, key));
+    }
+    set(key, value) {
+      return super.set(intern_set(this, key), value);
+    }
+    delete(key) {
+      return super.delete(intern_delete(this, key));
+    }
+  }
+
+  function intern_get({_intern, _key}, value) {
+    const key = _key(value);
+    return _intern.has(key) ? _intern.get(key) : value;
+  }
+
+  function intern_set({_intern, _key}, value) {
+    const key = _key(value);
+    if (_intern.has(key)) return _intern.get(key);
+    _intern.set(key, value);
+    return value;
+  }
+
+  function intern_delete({_intern, _key}, value) {
+    const key = _key(value);
+    if (_intern.has(key)) {
+      value = _intern.get(value);
+      _intern.delete(key);
+    }
+    return value;
+  }
+
+  function keyof(value) {
+    return value !== null && typeof value === "object" ? value.valueOf() : value;
+  }
+
+  function identity(x) {
+    return x;
+  }
+
+  function groups(values, ...keys) {
+    return nest(values, Array.from, identity, keys);
+  }
+
+  function nest(values, map, reduce, keys) {
+    return (function regroup(values, i) {
+      if (i >= keys.length) return reduce(values);
+      const groups = new InternMap();
+      const keyof = keys[i++];
+      let index = -1;
+      for (const value of values) {
+        const key = keyof(value, ++index, values);
+        const group = groups.get(key);
+        if (group) group.push(value);
+        else groups.set(key, [value]);
+      }
+      for (const [key, values] of groups) {
+        groups.set(key, regroup(values, i));
+      }
+      return map(groups);
+    })(values, 0);
   }
 
   function* flatten(arrays) {
@@ -1875,70 +2006,6 @@
     return projection(stereographicRaw)
         .scale(250)
         .clipAngle(142);
-  }
-
-  // Polsby-Popper compares a district’s area
-  function geoPolsbyPopper(feature) {
-    return geoArea(feature) * Math.PI * 4 / Math.pow(length$2(feature), 2);
-  }
-
-  function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-  }
-
-  function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-  }
-
-  function _iterableToArrayLimit(arr, i) {
-    var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]);
-
-    if (_i == null) return;
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-
-    var _s, _e;
-
-    try {
-      for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-        _arr.push(_s.value);
-
-        if (i && _arr.length === i) break;
-      }
-    } catch (err) {
-      _d = true;
-      _e = err;
-    } finally {
-      try {
-        if (!_n && _i["return"] != null) _i["return"]();
-      } finally {
-        if (_d) throw _e;
-      }
-    }
-
-    return _arr;
-  }
-
-  function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-  }
-
-  function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-
-    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-
-    return arr2;
-  }
-
-  function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
   const EPSILON = Math.pow(2, -52);
@@ -7571,6 +7638,69 @@
 
   //
 
+  function geoHullRatio(feature) {
+    return geoArea(feature) / geoArea(geoHull(feature));
+  }
+
+  function geoHull(feature) {
+    return geoVoronoi(jiggle(flatten$2(feature))).hull();
+  } // Flatten nested coordinates
+
+
+  function flatten$2(feature) {
+    var flattened = [];
+    var geometry = feature.geometry;
+    var coordinates = geometry.coordinates,
+        type = geometry.type;
+
+    if (type === "Polygon") {
+      flattened = denest(coordinates);
+    } else if (type === "MultiPolygon") {
+      for (var i = 0, l = coordinates.length; i < l; i++) {
+        flattened.push(denest(coordinates[i]));
+      }
+
+      flattened = denest(flattened);
+    }
+
+    return flattened;
+  }
+
+  function denest(array) {
+    return [].concat.apply([], array);
+  } // Jiggle longitudes
+  // geoVoronoi().hull() has a bug when provided duplicate coordinates
+
+
+  function jiggle(coords) {
+    var jiggled = [];
+    var epsilon = 1e-6;
+    var grouped = groups(coords, function (d) {
+      return d[0];
+    });
+
+    for (var i = 0, l = grouped.length; i < l; i++) {
+      var entries = grouped[i][1];
+
+      for (var i0 = 0, l0 = entries.length; i0 < l0; i0++) {
+        var _entries$i = _slicedToArray(entries[i0], 2),
+            x = _entries$i[0],
+            y = _entries$i[1];
+
+        var s = i0 % 2 === 0 ? 1 : -1;
+        var e = s * epsilon * Math.ceil(i0 / 2);
+        jiggled.push([x + e, y]);
+      }
+    }
+
+    return jiggled;
+  }
+
+  // Polsby-Popper compares a district’s area
+  function geoPolsbyPopper(feature) {
+    return geoArea(feature) * Math.PI * 4 / Math.pow(length$2(feature), 2);
+  }
+
   function shuffle$3(array) {
     var m = array.length,
         t,
@@ -7788,6 +7918,7 @@
     return Math.PI * 2 * Math.sqrt(geoArea(feature) / Math.PI) / length$2(feature);
   }
 
+  exports.geoHullRatio = geoHullRatio;
   exports.geoPolsbyPopper = geoPolsbyPopper;
   exports.geoReock = geoReock;
   exports.geoSchwartzberg = geoSchwartzberg;

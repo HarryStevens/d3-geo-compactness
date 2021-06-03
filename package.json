@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/HarryStevens/d3-geo-compactness#readme",
   "dependencies": {
+    "d3-array": "^2.12.1",
     "d3-geo": "^2.0.1",
     "d3-geo-voronoi": "^1.6.0",
     "d3-hierarchy": "^2.0.0"
