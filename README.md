@@ -5,7 +5,7 @@ A JavaScript library for computing the compactness of GeoJSON features. Measurin
 If you use NPM, `npm install d3-geo-compactness`. Otherwise, download the [latest release](https://github.com/HarryStevens/d3-geo-compactness/raw/master/dist/d3-geo-compactness.zip). AMD, CommonJS, and vanilla environments are supported. In vanilla, a d3 global is exported:
 
 ```html
-<script src="https://unpkg.com/d3-geo-compactness@0.0.1/dist/d3-geo-compactness.min.js"></script>
+<script src="https://unpkg.com/d3-geo-compactness@0.0.2/dist/d3-geo-compactness.min.js"></script>
 <script>
 
 const compactness = d3.geoPolsbyPopper();

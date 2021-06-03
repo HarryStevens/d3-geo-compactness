@@ -9,7 +9,7 @@
   "scripts": {
     "pretest": "rm -rf dist && mkdir dist && rollup -c --banner \"$(preamble)\"",
     "test": "tape 'test/**/*-test.js'",
-    "prepublish": "npm run test && uglifyjs dist/d3-geo-compactness.js -c -m -o dist/d3-geo-compactness.min.js",
+    "prepublish": "npm run test && terser dist/d3-geo-compactness.js -c -m -o dist/d3-geo-compactness.min.js",
     "postpublish": "zip -j dist/d3-geo-compactness.zip -- LICENSE README.md dist/d3-geo-compactness.js dist/d3-geo-compactness.min.js"
   },
   "repository": {
@@ -47,6 +47,6 @@
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-node-resolve": "^3.3.0",
     "tape": "4",
-    "uglify-js": "^2.8.11"
+    "terser": "^5.7.0"
   }
 }
