@@ -27,13 +27,17 @@ function flatten(feature){
   const { geometry } = feature;
   const { coordinates, type } = geometry;
   
-  if (type === "Polygon"){
-    flattened = denest(coordinates);
+  if (["MultiPoint", "LineString"].includes(type)){
+    flattened = coordinates;
   }
   
+  else if (["MultiLineString", "Polygon"].includes(type)){
+    flattened = denest(coordinates);
+  }
+
   else if (type === "MultiPolygon"){
     for (let i = 0, l = coordinates.length; i < l; i++){
-      flattened.push(denest(coordinates[i]));
+      flattened.push(denest(coordinates[i]))
     }
     flattened = denest(flattened);
   }

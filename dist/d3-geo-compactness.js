@@ -6732,6 +6732,8 @@
   var saturday = weekday(6);
 
   var sundays = sunday.range;
+  var mondays = monday.range;
+  var thursdays = thursday.range;
 
   var month = newInterval(function(date) {
     date.setDate(1);
@@ -6821,6 +6823,8 @@
   var utcSaturday = utcWeekday(6);
 
   var utcSundays = utcSunday.range;
+  var utcMondays = utcMonday.range;
+  var utcThursdays = utcThursday.range;
 
   var utcMonth = newInterval(function(date) {
     date.setUTCDate(1);
@@ -7660,7 +7664,9 @@
     var coordinates = geometry.coordinates,
         type = geometry.type;
 
-    if (type === "Polygon") {
+    if (["MultiPoint", "LineString"].includes(type)) {
+      flattened = coordinates;
+    } else if (["MultiLineString", "Polygon"].includes(type)) {
       flattened = denest(coordinates);
     } else if (type === "MultiPolygon") {
       for (var i = 0, l = coordinates.length; i < l; i++) {
