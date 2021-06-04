@@ -1,6 +1,6 @@
 {
   "name": "d3-geo-compactness",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A JavaScript library for computing the compactness of GeoJSON features.",
   "main": "dist/d3-geo-compactness.js",
   "unpkg": "dist/d3-geo-compactness.min.js",
