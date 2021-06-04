@@ -17,18 +17,18 @@ compactness(GeoJSONObject);
 
 ## API Reference
 
-<a name="geoHullRatio" href="#geoHullRatio">#</a> d3.<b>geoHullRatio</b>(<i>object</i>) · [Source](https://github.com/harrystevens/d3-geo-compactness/blob/master/src/geoHullRatio.js "Source")
+<a name="geoHullRatio" href="#geoHullRatio">#</a> d3.<b>geoHullRatio</b>(<i>object</i>) · [Source](https://github.com/harrystevens/d3-geo-compactness/blob/main/src/geoHullRatio.js "Source")
 
 Returns the ratio of the area of the specified GeoJSON <i>object</i> to the area of its [convex hull](https://en.wikipedia.org/wiki/Convex_hull).
 
-<a name="geoPolsbyPopper" href="#geoPolsbyPopper">#</a> d3.<b>geoPolsbyPopper</b>(<i>object</i>) · [Source](https://github.com/harrystevens/d3-geo-compactness/blob/master/src/geoPolsbyPopper.js "Source")
+<a name="geoPolsbyPopper" href="#geoPolsbyPopper">#</a> d3.<b>geoPolsbyPopper</b>(<i>object</i>) · [Source](https://github.com/harrystevens/d3-geo-compactness/blob/main/src/geoPolsbyPopper.js "Source")
 
 Returns the Polsby-Popper score of the specified GeoJSON <i>object</i>. The [Polsby-Popper test](https://en.wikipedia.org/wiki/Polsby%E2%80%93Popper_test) compares a district’s area to the area of a circle whose circumference is equal to the length of the district’s perimeter.
 
-<a name="geoReock" href="#geoReock">#</a> d3.<b>geoReock</b>(<i>object</i>) · [Source](https://github.com/harrystevens/d3-geo-compactness/blob/master/src/geoReock.js "Source")
+<a name="geoReock" href="#geoReock">#</a> d3.<b>geoReock</b>(<i>object</i>) · [Source](https://github.com/harrystevens/d3-geo-compactness/blob/main/src/geoReock.js "Source")
 
 Returns the Reock score of the specified GeoJSON <i>object</i>. The [Reock test](https://en.wikipedia.org/wiki/Reock_degree_of_compactness) compares a district’s area to the area of the smallest circle that encloses all of the district’s vertices.
 
-<a name="geoSchwartzberg" href="#geoSchwartzberg">#</a> d3.<b>geoSchwartzberg</b>(<i>object</i>) · [Source](https://github.com/harrystevens/d3-geo-compactness/blob/master/src/geoSchwartzberg.js "Source")
+<a name="geoSchwartzberg" href="#geoSchwartzberg">#</a> d3.<b>geoSchwartzberg</b>(<i>object</i>) · [Source](https://github.com/harrystevens/d3-geo-compactness/blob/main/src/geoSchwartzberg.js "Source")
 
 Returns the Schwartzberg score of the specified GeoJSON <i>object</i>. Similar to the more common [Polsby-Popper test](#geoPolsbyPopper), the Schwartzberg test compares the length of the district’s perimeter to the circumference of a circle whose area is equal to the district’s area.
