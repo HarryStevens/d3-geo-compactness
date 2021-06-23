@@ -8,9 +8,7 @@ If you use NPM, `npm install d3-geo-compactness`. Otherwise, download the [lates
 <script src="https://unpkg.com/d3-geo-compactness@0.0.5/dist/d3-geo-compactness.min.js"></script>
 <script>
 
-const compactness = d3.geoPolsbyPopper();
-
-compactness(GeoJSONObject);
+const compactness = d3.geoPolsbyPopper(GeoJSONObject);
 
 </script>
 ```
@@ -23,7 +21,7 @@ Returns the ratio of the area of the specified GeoJSON <i>object</i> to the area
 
 <a name="geoPolsbyPopper" href="#geoPolsbyPopper">#</a> d3.<b>geoPolsbyPopper</b>(<i>object</i>) · [Source](https://github.com/harrystevens/d3-geo-compactness/blob/main/src/geoPolsbyPopper.js "Source")
 
-Returns the Polsby-Popper score of the specified GeoJSON <i>object</i>. The [Polsby-Popper test](https://en.wikipedia.org/wiki/Polsby%E2%80%93Popper_test) compares a district’s area to the area of a circle whose circumference is equal to the length of the district’s perimeter.
+Returns the Polsby-Popper score of the specified GeoJSON <i>object</i>. The [Polsby-Popper test](https://en.wikipedia.org/wiki/Polsby%E2%80%93Popper_test) compares a district’s area to the area of a circle whose circumference is equal to the length of the district’s perimeter. A district’s Polsby-Popper score is the square of its [Schwartzberg score](#geoSchwartzberg).
 
 <a name="geoReock" href="#geoReock">#</a> d3.<b>geoReock</b>(<i>object</i>) · [Source](https://github.com/harrystevens/d3-geo-compactness/blob/main/src/geoReock.js "Source")
 
@@ -31,4 +29,4 @@ Returns the Reock score of the specified GeoJSON <i>object</i>. The [Reock test]
 
 <a name="geoSchwartzberg" href="#geoSchwartzberg">#</a> d3.<b>geoSchwartzberg</b>(<i>object</i>) · [Source](https://github.com/harrystevens/d3-geo-compactness/blob/main/src/geoSchwartzberg.js "Source")
 
-Returns the Schwartzberg score of the specified GeoJSON <i>object</i>. Similar to the more common [Polsby-Popper test](#geoPolsbyPopper), the Schwartzberg test compares the length of the district’s perimeter to the circumference of a circle whose area is equal to the district’s area.
+Returns the Schwartzberg score of the specified GeoJSON <i>object</i>. The Schwartzberg test compares the length of the district’s perimeter to the circumference of a circle whose area is equal to the district’s area. A district’s Schwartzberg score is the square root of its [Polsby-Popper score](#geoPolsbyPopper).
