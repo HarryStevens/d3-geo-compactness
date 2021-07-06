@@ -5,7 +5,7 @@ A JavaScript library for computing the compactness of GeoJSON features. Measurin
 If you use NPM, `npm install d3-geo-compactness`. Otherwise, download the [latest release](https://github.com/HarryStevens/d3-geo-compactness/blob/main/dist/d3-geo-compactness.zip). AMD, CommonJS, and vanilla environments are supported. In vanilla, a d3 global is exported:
 
 ```html
-<script src="https://unpkg.com/d3-geo-compactness@0.0.6/dist/d3-geo-compactness.min.js"></script>
+<script src="https://unpkg.com/d3-geo-compactness@0.1.0/dist/d3-geo-compactness.min.js"></script>
 <script>
 
 const compactness = d3.geoPolsbyPopper(GeoJSONObject);
@@ -35,8 +35,8 @@ Returns the Schwartzberg score of the specified GeoJSON <i>object</i>. The Schwa
 
 <a name="geoEnclose" href="#geoEnclose">#</a> d3.<b>geoEnclose</b>(<i>object</i>) · [Source](https://github.com/harrystevens/d3-geo-compactness/blob/main/src/utils/geoEnclose.js "Source")
 
-Returns the [minimum enclosing circle](https://observablehq.com/@fil/bounding-circles) of the specified GeoJSON <i>object</i>, used for computing the [Reock score](#geoReock) of a district.
+Returns a [GeoJSON Polygon](https://datatracker.ietf.org/doc/html/rfc7946#section-3.1.6) representing the [minimum enclosing circle](https://observablehq.com/@fil/bounding-circles) of the specified GeoJSON <i>object</i>, used for computing the [Reock score](#geoReock) of a district.
 
 <a name="geoHull" href="#geoHull">#</a> d3.<b>geoHull</b>(<i>object</i>) · [Source](https://github.com/harrystevens/d3-geo-compactness/blob/main/src/utils/geoHull.js "Source")
 
-Returns the spherical [convex hull](https://en.wikipedia.org/wiki/Convex_hull) of the specified GeoJSON <i>object</i>, used for computing the [convex hull ratio](#geoHullRatio) of a district.
+Returns a [GeoJSON Polygon](https://datatracker.ietf.org/doc/html/rfc7946#section-3.1.6) representing the spherical [convex hull](https://en.wikipedia.org/wiki/Convex_hull) of the specified GeoJSON <i>object</i>, used for computing the [convex hull ratio](#geoHullRatio) of a district.

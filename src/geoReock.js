@@ -6,5 +6,5 @@ import { geoArea } from "d3-geo";
 import { geoEnclose } from "./utils/geoEnclose.js";
 
 export function geoReock(feature) {
-  return geoArea(feature) / (Math.PI * geoEnclose(feature).r ** 2);
+  return geoArea(feature) / geoArea(geoEnclose(feature))
 }
