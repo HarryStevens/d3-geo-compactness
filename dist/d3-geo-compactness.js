@@ -5,65 +5,6 @@
   (factory((global.d3 = global.d3 || {})));
 }(this, (function (exports) { 'use strict';
 
-  function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-  }
-
-  function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-  }
-
-  function _iterableToArrayLimit(arr, i) {
-    var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]);
-
-    if (_i == null) return;
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-
-    var _s, _e;
-
-    try {
-      for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-        _arr.push(_s.value);
-
-        if (i && _arr.length === i) break;
-      }
-    } catch (err) {
-      _d = true;
-      _e = err;
-    } finally {
-      try {
-        if (!_n && _i["return"] != null) _i["return"]();
-      } finally {
-        if (_d) throw _e;
-      }
-    }
-
-    return _arr;
-  }
-
-  function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-  }
-
-  function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-
-    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-
-    return arr2;
-  }
-
-  function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-
   function ascending(a, b) {
     return a < b ? -1 : a > b ? 1 : a >= b ? 0 : NaN;
   }
@@ -2006,6 +1947,65 @@
     return projection(stereographicRaw)
         .scale(250)
         .clipAngle(142);
+  }
+
+  function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+  }
+
+  function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+  }
+
+  function _iterableToArrayLimit(arr, i) {
+    var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]);
+
+    if (_i == null) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+
+    var _s, _e;
+
+    try {
+      for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"] != null) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+
+    return _arr;
+  }
+
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+
+  function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
   const EPSILON = Math.pow(2, -52);
@@ -6732,8 +6732,6 @@
   var saturday = weekday(6);
 
   var sundays = sunday.range;
-  var mondays = monday.range;
-  var thursdays = thursday.range;
 
   var month = newInterval(function(date) {
     date.setDate(1);
@@ -6823,8 +6821,6 @@
   var utcSaturday = utcWeekday(6);
 
   var utcSundays = utcSunday.range;
-  var utcMondays = utcMonday.range;
-  var utcThursdays = utcThursday.range;
 
   var utcMonth = newInterval(function(date) {
     date.setUTCDate(1);
@@ -7642,10 +7638,6 @@
 
   //
 
-  function geoHullRatio(feature) {
-    return geoArea(feature) / geoArea(geoHull(feature));
-  }
-
   function geoHull(feature) {
     var flattened = flatten$2(feature);
     var hull = geoVoronoi(flattened).hull(); // Test if the jiggle is necessary
@@ -7656,7 +7648,6 @@
       return geoVoronoi(jiggle(flattened)).hull();
     }
   } // Flatten nested coordinates
-
 
   function flatten$2(feature) {
     var flattened = [];
@@ -7707,6 +7698,11 @@
     }
 
     return jiggled;
+  }
+
+  // Compares a district’s area
+  function geoHullRatio(feature) {
+    return geoArea(feature) / geoArea(geoHull(feature));
   }
 
   // Polsby-Popper compares a district’s area
@@ -7846,13 +7842,7 @@
     };
   }
 
-  function geoReock(feature) {
-    return geoArea(feature) / (Math.PI * Math.pow(geoEnclose(feature).r, 2));
-  } // https://observablehq.com/@fil/spherical-smallest-circle-problem
-  // https://observablehq.com/@fil/bounding-circles
-
   var stereo = geoStereographic();
-
   function geoEnclose(f) {
     var _f$geometry = f.geometry,
         type = _f$geometry.type,
@@ -7924,6 +7914,11 @@
         c = c2 * (b2 + a2 - c2),
         d = a + b + c;
     return [(A[0] * a + B[0] * b + C[0] * c) / d, (A[1] * a + B[1] * b + C[1] * c) / d];
+  }
+
+  // Reock compares a district’s area
+  function geoReock(feature) {
+    return geoArea(feature) / (Math.PI * Math.pow(geoEnclose(feature).r, 2));
   }
 
   // Schwartzberg compares the length of the district’s perimeter
