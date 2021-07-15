@@ -1,4 +1,4 @@
-// https://github.com/HarryStevens/d3-geo-compactness#readme Version 0.1.1. Copyright 2021 Harry Stevens.
+// https://github.com/HarryStevens/d3-geo-compactness#readme Version 0.1.2. Copyright 2021 Harry Stevens.
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -7645,7 +7645,7 @@
     var coordinates = geometry.coordinates,
         type = geometry.type;
 
-    if (["MultiPoint", "LineString"].includes(type)) {
+    if (["Point", "MultiPoint", "LineString"].includes(type)) {
       flattened = coordinates;
     } else if (["MultiLineString", "Polygon"].includes(type)) {
       flattened = denest(coordinates);
