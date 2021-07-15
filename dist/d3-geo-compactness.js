@@ -1,4 +1,4 @@
-// https://github.com/HarryStevens/d3-geo-compactness#readme Version 0.1.0. Copyright 2021 Harry Stevens.
+// https://github.com/HarryStevens/d3-geo-compactness#readme Version 0.1.1. Copyright 2021 Harry Stevens.
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -6732,8 +6732,6 @@
   var saturday = weekday(6);
 
   var sundays = sunday.range;
-  var mondays = monday.range;
-  var thursdays = thursday.range;
 
   var month = newInterval(function(date) {
     date.setDate(1);
@@ -6823,8 +6821,6 @@
   var utcSaturday = utcWeekday(6);
 
   var utcSundays = utcSunday.range;
-  var utcMondays = utcMonday.range;
-  var utcThursdays = utcThursday.range;
 
   var utcMonth = newInterval(function(date) {
     date.setUTCDate(1);
@@ -7642,18 +7638,8 @@
 
   //
 
-  function geoHull(feature) {
-    var flattened = flatten$2(feature);
-    var hull = geoVoronoi(flattened).hull(); // Test if the jiggle is necessary
-
-    if (geoArea(hull) >= geoArea(feature)) {
-      return hull;
-    } else {
-      return geoVoronoi(jiggle(flattened)).hull();
-    }
-  } // Flatten nested coordinates
-
-  function flatten$2(feature) {
+  // Flatten nested coordinates
+  function geoFlatten(feature) {
     var flattened = [];
     var geometry = feature.geometry;
     var coordinates = geometry.coordinates,
@@ -7676,9 +7662,19 @@
 
   function denest(array) {
     return [].concat.apply([], array);
+  }
+
+  function geoHull(feature) {
+    var flattened = geoFlatten(feature);
+    var hull = geoVoronoi(flattened).hull(); // Test if the jiggle is necessary
+
+    if (geoArea(hull) >= geoArea(feature)) {
+      return hull;
+    } else {
+      return geoVoronoi(jiggle(flattened)).hull();
+    }
   } // Jiggle longitudes
   // geoVoronoi().hull() has a bug when provided duplicate coordinates
-
 
   function jiggle(coords) {
     var jiggled = [];
@@ -7848,9 +7844,9 @@
 
   var epsilon$4 = 1e-6;
   function geoEnclose(feature) {
-    var _encloseFeature = encloseFeature(feature),
-        c = _encloseFeature.c,
-        r = _encloseFeature.r;
+    var _enclose = enclose$1(geoFlatten(feature)),
+        c = _enclose.c,
+        r = _enclose.r;
 
     return geoCircle().center(c).radius(r)();
   }
@@ -7914,13 +7910,6 @@
       c: c,
       r: distance(c, f[0]) * 180 / Math.PI
     };
-  }
-
-  function encloseFeature(f) {
-    var _f$geometry = f.geometry,
-        type = _f$geometry.type,
-        coordinates = _f$geometry.coordinates;
-    return enclose$1(coordinates.flat(type == "Polygon" ? 1 : 2));
   }
 
   // Reock compares a district’s area
