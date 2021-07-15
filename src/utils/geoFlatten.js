@@ -4,7 +4,7 @@ export function geoFlatten(feature){
   const { geometry } = feature;
   const { coordinates, type } = geometry;
   
-  if (["MultiPoint", "LineString"].includes(type)){
+  if (["Point", "MultiPoint", "LineString"].includes(type)){
     flattened = coordinates;
   }
   
