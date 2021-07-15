@@ -4,11 +4,12 @@
 import { geoCentroid, geoCircle, geoDistance, geoStereographic } from "d3-geo";
 import { geoVoronoi } from "d3-geo-voronoi";
 import { packEnclose } from "d3-hierarchy";
+import { geoFlatten } from "./geoFlatten.js";
 
 const epsilon = 1e-6;
 
 export function geoEnclose(feature){
-  const { c, r } = encloseFeature(feature);
+  const { c, r } = enclose(geoFlatten(feature));
 
   return geoCircle()
     .center(c)
@@ -66,11 +67,4 @@ function enclose(points){
   }
 
   return { c, r: (geoDistance(c, f[0]) * 180) / Math.PI };
-}
-
-function encloseFeature(f) {
-  const { type, coordinates } = f.geometry;
-  return enclose(
-    coordinates.flat(type == "Polygon" ? 1 : 2)
-  );
 }

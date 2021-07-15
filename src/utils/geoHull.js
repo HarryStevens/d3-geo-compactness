@@ -1,9 +1,10 @@
 import { groups } from "d3-array";
 import { geoArea } from "d3-geo";
 import { geoVoronoi } from "d3-geo-voronoi";
+import { geoFlatten } from "./geoFlatten.js";
 
 export function geoHull(feature){
-  const flattened = flatten(feature);
+  const flattened = geoFlatten(feature);
   const hull = geoVoronoi(flattened).hull();
   // Test if the jiggle is necessary
   if (geoArea(hull) >= geoArea(feature)){
@@ -14,33 +15,6 @@ export function geoHull(feature){
   }
 }
 
-// Flatten nested coordinates
-function flatten(feature){
-  let flattened = [];
-  const { geometry } = feature;
-  const { coordinates, type } = geometry;
-  
-  if (["MultiPoint", "LineString"].includes(type)){
-    flattened = coordinates;
-  }
-  
-  else if (["MultiLineString", "Polygon"].includes(type)){
-    flattened = denest(coordinates);
-  }
-
-  else if (type === "MultiPolygon"){
-    for (let i = 0, l = coordinates.length; i < l; i++){
-      flattened.push(denest(coordinates[i]))
-    }
-    flattened = denest(flattened);
-  }
-  
-  return flattened;
-}
-
-function denest(array){
-  return [].concat.apply([], array);
-}
 
 // Jiggle longitudes
 // geoVoronoi().hull() has a bug when provided duplicate coordinates
