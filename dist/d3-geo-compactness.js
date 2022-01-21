@@ -1,4 +1,4 @@
-// https://github.com/HarryStevens/d3-geo-compactness#readme Version 0.1.2. Copyright 2021 Harry Stevens.
+// https://github.com/HarryStevens/d3-geo-compactness#readme Version 0.1.2. Copyright 2022 Harry Stevens.
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -6732,6 +6732,8 @@
   var saturday = weekday(6);
 
   var sundays = sunday.range;
+  var mondays = monday.range;
+  var thursdays = thursday.range;
 
   var month = newInterval(function(date) {
     date.setDate(1);
@@ -6821,6 +6823,8 @@
   var utcSaturday = utcWeekday(6);
 
   var utcSundays = utcSunday.range;
+  var utcMondays = utcMonday.range;
+  var utcThursdays = utcThursday.range;
 
   var utcMonth = newInterval(function(date) {
     date.setUTCDate(1);
